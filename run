@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Copyright (c) 2023 kk
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
+set -e
+
+# $0 pack /kk/xxx.tar.gz
+pack() {
+  local name=$(realpath $1)
+  base_name=$(basename $name)
+  mkdir -p lib/$base_name
+  cd lib/$base_name
+  split -b 10M $name $base_name.
+}
+
+# $0 unpack xxx.tar.gz
+unpack() {
+  local name=$1
+  cat lib/$name/* >$name
+}
+
+eval "$@"
